@@ -114,15 +114,15 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    try:
-        visits = redis.incr("counter")
-    except RedisError:
-        visits = "&lt;i&gt;cannot connect to Redis, counter disabled&lt;/i&gt;"
+	try:
+		visits = redis.incr("counter")
+	except RedisError:
+		visits = "&lt;i&gt;cannot connect to Redis, counter disabled&lt;/i&gt;"
 
-    html = "&lt;h3&gt;Hello {name}!&lt;/h3&gt;" \
-           "&lt;b&gt;Hostname:&lt;/b&gt; {hostname}&lt;br/&gt;" \
-           "&lt;b&gt;Visits:&lt;/b&gt; {visits}"
-    return html.format(name=os.getenv("NAME", "world"), hostname=socket.gethostname(), visits=visits)
+	html = "&lt;h3&gt;Hello {name}!&lt;/h3&gt;" \
+			"&lt;b&gt;Hostname:&lt;/b&gt; {hostname}&lt;br/&gt;" \
+			"&lt;b&gt;Visits:&lt;/b&gt; {visits}"
+	return html.format(name=os.getenv("NAME", "world"), hostname=socket.gethostname(), visits=visits)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80)
