@@ -146,16 +146,12 @@ $ docker run --rm -itd --name c2 --net my_bridge busybox sh
 </code></pre>
 <p>Using a specific IP from the created network</p>
 <pre><code>$ docker run --rm -it --name c3 --net my_bridge --ip 10.0.0.254 busybox sh
-
 # ip a
-
 # ping c2
-
 # exit
 </code></pre>
 <p>Checking the c2 IP address</p>
 <pre><code>$ docker exec -ti c2 sh
-
 # ip a
 </code></pre>
 
