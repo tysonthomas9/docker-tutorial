@@ -103,29 +103,29 @@ $ docker ps
 Redis
 </code></pre>
 <p>create another file  <code>app.py</code> with this content:</p>
-<pre><code>from flask import Flask
-from redis import Redis, RedisError
-import os
-import socket
+<pre class=" language-python"><code class="prism  language-python"><span class="token keyword">from</span> flask <span class="token keyword">import</span> Flask
+<span class="token keyword">from</span> redis <span class="token keyword">import</span> Redis<span class="token punctuation">,</span> RedisError
+<span class="token keyword">import</span> os
+<span class="token keyword">import</span> socket
 
-redis = Redis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2)
+redis <span class="token operator">=</span> Redis<span class="token punctuation">(</span>host<span class="token operator">=</span><span class="token string">"redis"</span><span class="token punctuation">,</span> db<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> socket_connect_timeout<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">,</span> socket_timeout<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
 
-app = Flask(__name__)
+app <span class="token operator">=</span> Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
 
-@app.route("/")
-def hello():
-	try:
-		visits = redis.incr("counter")
-	except RedisError:
-		visits = "&lt;i&gt;cannot connect to Redis, counter disabled&lt;/i&gt;"
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token keyword">try</span><span class="token punctuation">:</span>
+		visits <span class="token operator">=</span> redis<span class="token punctuation">.</span>incr<span class="token punctuation">(</span><span class="token string">"counter"</span><span class="token punctuation">)</span>
+	<span class="token keyword">except</span> RedisError<span class="token punctuation">:</span>
+		visits <span class="token operator">=</span> <span class="token string">"&lt;i&gt;cannot connect to Redis, counter disabled&lt;/i&gt;"</span>
 
-	html = "&lt;h3&gt;Hello {name}!&lt;/h3&gt;" \
-			"&lt;b&gt;Hostname:&lt;/b&gt; {hostname}&lt;br/&gt;" \
-			"&lt;b&gt;Visits:&lt;/b&gt; {visits}"
-	return html.format(name=os.getenv("NAME", "world"), hostname=socket.gethostname(), visits=visits)
+	html <span class="token operator">=</span> <span class="token string">"&lt;h3&gt;Hello {name}!&lt;/h3&gt;"</span> \
+			<span class="token string">"&lt;b&gt;Hostname:&lt;/b&gt; {hostname}&lt;br/&gt;"</span> \
+			<span class="token string">"&lt;b&gt;Visits:&lt;/b&gt; {visits}"</span>
+	<span class="token keyword">return</span> html<span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>name<span class="token operator">=</span>os<span class="token punctuation">.</span>getenv<span class="token punctuation">(</span><span class="token string">"NAME"</span><span class="token punctuation">,</span> <span class="token string">"world"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> hostname<span class="token operator">=</span>socket<span class="token punctuation">.</span>gethostname<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> visits<span class="token operator">=</span>visits<span class="token punctuation">)</span>
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80)
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">"__main__"</span><span class="token punctuation">:</span>
+	app<span class="token punctuation">.</span>run<span class="token punctuation">(</span>host<span class="token operator">=</span><span class="token string">'0.0.0.0'</span><span class="token punctuation">,</span> port<span class="token operator">=</span><span class="token number">80</span><span class="token punctuation">)</span>
 </code></pre>
 <p>Build the docker image</p>
 <pre><code>$ docker build --tag=friendlyhello .
