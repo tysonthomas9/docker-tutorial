@@ -119,9 +119,7 @@ app <span class="token operator">=</span> Flask<span class="token punctuation">(
 	<span class="token keyword">except</span> RedisError<span class="token punctuation">:</span>
 		visits <span class="token operator">=</span> <span class="token string">"&lt;i&gt;cannot connect to Redis, counter disabled&lt;/i&gt;"</span>
 
-	html <span class="token operator">=</span> <span class="token string">"&lt;h3&gt;Hello {name}!&lt;/h3&gt;"</span> \
-			<span class="token string">"&lt;b&gt;Hostname:&lt;/b&gt; {hostname}&lt;br/&gt;"</span> \
-			<span class="token string">"&lt;b&gt;Visits:&lt;/b&gt; {visits}"</span>
+	html <span class="token operator">=</span> <span class="token string">"&lt;h3&gt;Hello {name}!&lt;/h3&gt;&lt;b&gt;Hostname:&lt;/b&gt; {hostname}&lt;br/&gt;&lt;b&gt;Visits:&lt;/b&gt; {visits}"</span>
 	<span class="token keyword">return</span> html<span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>name<span class="token operator">=</span>os<span class="token punctuation">.</span>getenv<span class="token punctuation">(</span><span class="token string">"NAME"</span><span class="token punctuation">,</span> <span class="token string">"world"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> hostname<span class="token operator">=</span>socket<span class="token punctuation">.</span>gethostname<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> visits<span class="token operator">=</span>visits<span class="token punctuation">)</span>
 
 <span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">"__main__"</span><span class="token punctuation">:</span>
